@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "random": "cpp",
+        "ratio": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "numeric": "cpp",
+        "*.tcc": "cpp"
+    }
+}
