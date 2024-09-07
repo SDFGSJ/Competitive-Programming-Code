@@ -9,19 +9,19 @@ int main(){
         l[i]=r[i]=a[i];
     }
 
-    l[0]=1;
+    l[0]=1; //the leftmost position could only construct a pyramid with h=1
     for(int i=1;i<n;i++){
         l[i]=min(a[i],l[i-1]+1);
     }
 
-    r[n-1]=1;
+    r[n-1]=1;   //the rightmost position could only construct a pyramid with h=1
     for(int i=n-2;i>=0;i--){
         r[i]=min(a[i],r[i+1]+1);
     }
 
     int ans=-1;
     for(int i=0;i<n;i++){
-        l[i]=min(l[i],r[i]);
+        l[i]=min(l[i],r[i]);    //the pyramid built on position i is the min(l[i], r[i])
         ans=max(ans,l[i]);
     }
     printf("%d\n",ans);
