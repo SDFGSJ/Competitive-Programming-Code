@@ -45,3 +45,11 @@ int main(){
     printf("\n");
     return 0;
 }
+/*
+u->v with weight w and xv-xu=w
+=> xv=xu+w and xu=xv-w
+so we maintain 2 graphs, one stores (u,v,w) edges, the other stores (v,u,-w) edges
+
+Note.
+editorial store 2 edges (u,v,w), (v,u,-w) in one graph instead of 2
+*/

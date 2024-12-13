@@ -23,3 +23,7 @@ int main(){
     printf("%d\n",ans);
     return 0;
 }
+/*
+bit manipulation O(N2^N)
+dfs recursion O(2^N)
+*/
