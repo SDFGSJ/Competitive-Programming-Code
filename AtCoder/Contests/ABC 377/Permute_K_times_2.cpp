@@ -58,8 +58,8 @@ int main(){
 /*
 a[i] = list of nodes of a cycle starting at node i
 P = [a,b,c]
-after 1 permu => P' = [P[P[1]],...], we know that P'[1] = P[P[1]] = P^2[1]
-after 2 permu => P''[1] = P'[P'[1]] = P'[P[P[1]]] = P[P[P[P[1]]]] = P^4[1]
-after k permu => P'k'[1] = P^k[1]
+after 1 permu => P'[i] = P[P[i]] = P^2[i]
+after 2 permu => P''[i] = P'[P'[i]] = P'[P[P[i]]] = P[P[P[P[i]]]] = P^4[i]
+after k permu => P^k[i]
 find the cycle
 */
