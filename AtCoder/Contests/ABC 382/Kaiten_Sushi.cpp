@@ -25,8 +25,6 @@ int main(){
             printf("%d\n",premin[idx-1]+1);
         }
     }
-
-
     return 0;
 }
 /*

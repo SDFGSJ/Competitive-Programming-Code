@@ -24,3 +24,9 @@ int main(){
     printf("%lld\n",ans);
     return 0;
 }
+/*
+binary search
+for i from 1 to n, let i be the left bound of the interval whose value is N/i
+find the right bound of the interval(last idx whose value is N/i)
+then the interval length is l-i+1, and move i to r
+*/

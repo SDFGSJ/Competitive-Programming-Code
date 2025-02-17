@@ -42,3 +42,8 @@ int main(){
     printf("%lld\n",1ll*black*white-m);
     return 0;
 }
+/*
+if input graph is not bipartite, then no
+mark every note in 0,1
+find how many edges can be added between 0,1
+*/
