@@ -49,4 +49,5 @@ int main(){
 bfs
 dist[i][0/1] be the min dist to vertex I under mode 0/1
 where mode 0 means we can only go through initially impassable edges
+video watched
 */
