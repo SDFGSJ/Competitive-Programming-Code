@@ -1,44 +1,49 @@
 #include<bits/stdc++.h>
 using namespace std;
-vector<int> G[2][200010];
-bool has_switch[200010];    //has_switch[i] = true if vertex i has switch on it
-queue<tuple<int,int,int>> q;    //<vertex,step,mode>
-int dist[200010][2];    //dist[i][j] = the min dist to from vertex 1 to i under mode j
+vector<pair<int,int>> G[400010];    //<v,cost>
+deque<int> dq;
+int dist[400010];   //dist[i] = the min dist to from vertex 1 to i
 int main(){
     int n,m,k;
     scanf("%d%d%d",&n,&m,&k);
     for(int i=0;i<m;i++){
         int u,v,a;
         scanf("%d%d%d",&u,&v,&a);
-        G[a][u].emplace_back(v);
-        G[a][v].emplace_back(u);
+        if(a){
+            G[u].emplace_back(v,1);
+            G[v].emplace_back(u,1);
+        }else{
+            G[n+u].emplace_back(n+v,1);
+            G[n+v].emplace_back(n+u,1);
+        }
     }
     for(int i=0;i<k;i++){
         int s;
         scanf("%d",&s);
-        has_switch[s]=true;
+        G[s].emplace_back(n+s,0);
+        G[n+s].emplace_back(s,0);
     }
 
-    for(int i=1;i<=n;i++){
-        dist[i][0]=dist[i][1]=INT_MAX;
+    for(int i=1;i<=2*n;i++){
+        dist[i]=INT_MAX;
     }
 
-    q.emplace(1,0,1);
-    dist[1][1]=0;
-    while(!q.empty()){
-        auto [vertex,step,mode]=q.front();q.pop();
-        for(auto nxt:G[mode][vertex]){
-            if(step+1 < dist[nxt][mode]){   //dist[nxt][mode]==INT_MAX
-                q.emplace(nxt,step+1,mode);
-                dist[nxt][mode]=step+1;
+    dq.emplace_back(1);   //start from (vertex, initially passable) = (1,1), whose corresponding vertex idx is 1
+    dist[1]=0;
+    while(!dq.empty()){
+        auto now=dq.front();dq.pop_front();
+        for(auto [nxt,cost]:G[now]){
+            if(dist[nxt]==INT_MAX){
+                dist[nxt]=dist[now]+cost;
+                if(cost){
+                    dq.emplace_back(nxt);
+                }else{
+                    dq.emplace_front(nxt);
+                }
             }
         }
-        if(has_switch[vertex] && step<dist[vertex][!mode]){ //dist[vertex][!mode]==INT_MAX
-            q.emplace(vertex,step,!mode);
-            dist[vertex][!mode]=step;
-        }
     }
-    int ans=min(dist[n][0], dist[n][1]);
+    int ans=min(dist[n], dist[2*n]);
     if(ans==INT_MAX){
         ans=-1;
     }
@@ -46,8 +51,7 @@ int main(){
     return 0;
 }
 /*
-bfs
-dist[i][0/1] be the min dist to vertex I under mode 0/1
-where mode 0 means we can only go through initially impassable edges
-video watched
+01-bfs
+notice the definition of state and assign correct idx(=1) to starting state
+Editorial video watched
 */
