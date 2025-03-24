@@ -1,66 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
-int a[200010];
-set<int> sorted_a,mex;
-unordered_map<int,int> um;  //<num,cnt>
-void debug(int n){
-    printf("mex=[");
-    for(auto i:mex){
-        printf("%d ",i);
-    }
-    printf("]\na=[");
-
-    for(int i=0;i<n;i++){
-        printf("%d ",a[i]);
-    }
-
-    printf("]\num={");
-    for(auto [k,v]:um){
-        printf("%d:%d, ",k,v);
-    }
-    printf("}\n");
-}
+int a[200010],cnt[200010];
+set<int> mex;
 int main(){
     int n,q;
     scanf("%d%d",&n,&q);
-    for(int i=0;i<n;i++){
+    for(int i=1;i<=n;i++){
         scanf("%d",&a[i]);
-        sorted_a.emplace(a[i]);
-        um[a[i]]++;
+        if(a[i]<=n){
+            cnt[a[i]]++;
+        }
     }
-    for(int i=0;mex.size()<10;i++){
-        if(sorted_a.find(i)==sorted_a.end()){
+
+    for(int i=0;i<=n;i++){
+        if(!cnt[i]){
             mex.emplace(i);
         }
     }
 
     for(int i=0;i<q;i++){
-        //debug(n);
         int idx,x;
         scanf("%d%d",&idx,&x);
-        idx--;
 
-        auto it=mex.find(x);
-        if(it!=mex.end()){
-            mex.erase(it);
-        }
-
-        if(um[a[idx]]==1 && a[idx]!=x){
-            mex.emplace(a[idx]);
-        }else if(x==*mex.begin()){
-            mex.erase(mex.begin());
-            for(int i=*mex.rbegin();;i++){
-                if(!um[i]){
-                    mex.emplace(i);
-                    break;
-                }
+        if(a[idx]<=n){
+            cnt[a[idx]]--;
+            if(!cnt[a[idx]]){
+                mex.emplace(a[idx]);
             }
         }
-        um[a[idx]]--;
         a[idx]=x;
-        um[a[idx]]++;
+        if(a[idx]<=n){
+            cnt[a[idx]]++;
+            if(cnt[a[idx]]==1){
+                mex.erase(a[idx]);
+            }
+        }
 
         printf("%d\n",*mex.begin());
     }
     return 0;
 }
+/*
+cnt[i] = # of i in a[]
+mex = set of int which are not in a[]
+the mex of a length-N seq could only be [0,N], so if x>N, just ignore it
+*/
