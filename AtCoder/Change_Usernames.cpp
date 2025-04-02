@@ -1,17 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 unordered_map<string,string> nxt;
-unordered_map<string,int> indeg;
+unordered_set<string> users;
 unordered_set<string> vis;
 bool has_cycle(string start){
+    unordered_set<string> path;
     string now=start;
-    while(nxt.find(now)!=nxt.end()){
-        if(vis.find(now)==vis.end()){
-            vis.emplace(now);
-            now=nxt[now];
-        }else{
+    while(1){
+        if(path.find(now)!=path.end()){ //encounter this node twice => has cycle
             return true;
         }
+        path.emplace(now);
+
+        if(vis.find(now)!=vis.end()){   //this node has been visited, no need to traverse further
+            break;
+        }
+        vis.emplace(now);
+
+        if(nxt.find(now)==nxt.end()){   //reach the end of this linked list
+            break;
+        }
+        now=nxt[now];
     }
     return false;
 }
@@ -21,33 +30,24 @@ int main(){
     for(int i=0;i<n;i++){
         string s,t;
         cin>>s>>t;
+        users.emplace(s),users.emplace(t);
         nxt[s]=t;
-        indeg[t]++;
     }
 
-    bool indeg_has_zero=false;
-    string ans="Yes";
-    for(auto [from,to]:nxt){
-        if(nxt[to]==from){
-            ans="No";
-        }
-        int deg=indeg[from];
-        if(deg==0){
-            indeg_has_zero=true;
-            if(has_cycle(from)){
-                ans="No";
+    for(auto user:users){
+        if(vis.find(user)==vis.end()){
+            bool res=has_cycle(user);
+            if(res){
+                printf("No\n");
+                exit(0);
             }
         }
     }
-    if(!indeg_has_zero){
-        ans="No";
-    }
-    cout<<ans<<'\n';
+    printf("Yes\n");
     return 0;
 }
 /*
 if contain cycle, then no
 special case: a->b, b->a
-if all indeg=0 => no
-else => yes?
+Editorial video watched
 */
