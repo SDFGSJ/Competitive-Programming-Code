@@ -14,6 +14,7 @@ long long all_permu(vector<int>& bridges,int n){
     long long res=LONG_LONG_MAX;
     do{
         for(int mask=0;mask<(1<<k);mask++){ //bit = 0 means no flip
+            //better way to calc time cost:https://atcoder.jp/contests/abc369/submissions/64811728
             vector<int> endpoints;
             for(int i=0;i<k;i++){
                 auto [u,v,cost]=edges[bridges[i]];
