@@ -55,4 +55,6 @@ so the problem becomes "remove min elements in vec[] s.t. vec[i] and vec[i+1] ar
 if we want to remove vec[i], then whether vec[i-1] is removed or not is not important, so we take the min(dp[i-1][0],dp[i-1][1]) and remove vec[i]
 if we want to keep vec[i], then vec[i-1] must be removed, so the value of dp[i][0] comes from dp[i-1][1]
 see top 20's code
+check CP note point 61.
+Editorial video watched
 */
